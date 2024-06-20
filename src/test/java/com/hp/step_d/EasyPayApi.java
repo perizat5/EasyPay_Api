@@ -26,7 +26,7 @@ public class EasyPayApi {
                .body(loginBody)
                .post("https://code-api-staging.easypayfinance.com/api/Authentication/login")
                .then()
-                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("LoginSchema.json"))
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("LoginSchema.json")) //jsonSchema validation
                .statusCode(200)
                .contentType("application/json; charset=utf-8")
                .extract().jsonPath();
@@ -53,7 +53,7 @@ public class EasyPayApi {
                .body(new File("src/test/resources/easyPay.json"))
                .post("https://code-api-staging.easypayfinance.com/api/Application")
                .then()
-              .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("UpdateAppSchema.json"))
+              .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("UpdateAppSchema.json")) //jsonSchema validation
                .statusCode(200)
                .contentType("application/json; charset=utf-8")
                .extract().jsonPath();
