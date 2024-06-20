@@ -2,6 +2,7 @@ package com.hp.step_d;
 
 import static io.restassured.RestAssured.*;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.path.json.JsonPath;
 import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.Test;
@@ -25,12 +26,11 @@ public class EasyPayApi {
                .body(loginBody)
                .post("https://code-api-staging.easypayfinance.com/api/Authentication/login")
                .then()
+                .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("LoginSchema.json"))
                .statusCode(200)
                .contentType("application/json; charset=utf-8")
                .extract().jsonPath();
-
        token = jp.getString("token");
-       System.out.println("token = " + token);
    }
 
    @Test
@@ -53,6 +53,7 @@ public class EasyPayApi {
                .body(new File("src/test/resources/easyPay.json"))
                .post("https://code-api-staging.easypayfinance.com/api/Application")
                .then()
+              .body(JsonSchemaValidator.matchesJsonSchemaInClasspath("UpdateAppSchema.json"))
                .statusCode(200)
                .contentType("application/json; charset=utf-8")
                .extract().jsonPath();
